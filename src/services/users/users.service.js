@@ -18,3 +18,11 @@ export const getUser = async (email, password)=>{
     const isCorrectPassword = await bcrypt.compare(password, hash);
     return isCorrectPassword ? user : null;
 }
+
+export const updateUserInDB = async (email, userInfo)=>{
+    const updatedUser = await User.findOneAndUpdate(
+        {email},
+        {...userInfo},
+        {new: true, runValidators: true});
+    
+}

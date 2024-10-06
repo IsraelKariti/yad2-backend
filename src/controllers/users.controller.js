@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { createUser, getUser } from "../services/users/users.service.js";
+import { createUser, getUser, updateUserInDB } from "../services/users/users.service.js";
 import { ok, created, badRequest, serverError } from "../responses/responses.js";
 dotenv.config();
 const jwt_secret = process.env.JWT_SECRET;
@@ -35,4 +35,15 @@ export const login = async (req, res)=>{
     }
     const token = jwt.sign({email}, jwt_secret);
     ok(res, token);
+}
+
+export const updateUser = async (req, res)=>{
+    const email = req.email;
+    try{
+        updateUserInDB(email, req.body);
+        ok(res, 'user updated successfully');
+    }
+    catch(e){
+        badRequest(res, e);
+    }
 }
