@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import validator from 'validator';
 
 const userSchema = mongoose.Schema({
     firstName: {
@@ -34,7 +33,15 @@ const userSchema = mongoose.Schema({
     },
     houseNumber: {
         type: String
-    }
+    },
+    SellListings: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'SellListing', // This is the name of the other collection (Listing)
+    }],
+    RentListings: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'RentListing', // This is the name of the other collection (Listing)
+    }]
 })
 
-export const User = mongoose.model('USER', userSchema);
+export const User = mongoose.model('User', userSchema);

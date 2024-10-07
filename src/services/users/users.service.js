@@ -24,5 +24,11 @@ export const updateUserInDB = async (email, userInfo)=>{
         {email},
         {...userInfo},
         {new: true, runValidators: true});
-    
+}
+
+export const addSellListingToUserInDB = async (email, sellListingId)=>{
+    const updatedUser = await User.findOneAndUpdate(
+        {email},
+        {$push: {SellListings: sellListingId}}
+    )
 }
