@@ -98,7 +98,7 @@ const sellListingSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
-    cost: {
+    price: {
         type: Number,
         min: [10000, 'Cost must be at least 10000']
     },

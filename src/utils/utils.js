@@ -35,3 +35,29 @@ export const getAreaAndNeighbourhood = async (cityId, streetId, houseNumber)=>{
     const hood_heb = response.data.data.data[0].hood_heb;
     return {area_heb, hood_heb};
 }
+
+export const getSetBitIndices = (num)=> {
+  const indices = [];
+  
+  // Iterate over all 32 bits of the integer
+  for (let i = 0; i < 32; i++) {
+    // Create a bitmask with a 1 at the i-th position
+    const bitmask = 1 << i;
+    
+    // Use bitwise AND to check if the bit at position i is set to 1
+    if ((num & bitmask) !== 0) {
+      indices.push(i);
+    }
+  }
+  
+  return indices;
+}
+
+export const extractListValuesByIndecis = (indecis, list)=>{
+  const values = [];
+  for(const i of indecis){
+    const value = list[i];
+    values.push(value);
+  }
+  return values;
+}

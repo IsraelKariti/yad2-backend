@@ -72,7 +72,7 @@ const sellListingSchema = Yup.object().shape({
     sqaureMetersTotal: Yup.number()
         .min(1),
     
-    cost: Yup.number()
+    price: Yup.number()
         .min(10000),
     
     entranceDate: Yup.date(),
