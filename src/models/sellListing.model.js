@@ -100,7 +100,8 @@ const sellListingSchema = mongoose.Schema({
     },
     price: {
         type: Number,
-        min: [10000, 'Cost must be at least 10000']
+        min: [0, 'Cost must be at least 0'],
+        default: 0,
     },
     entranceDate: {
         type: Date, 

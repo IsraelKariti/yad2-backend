@@ -9,12 +9,25 @@ export const createSellListingInDB = async (listingInfo)=>{
     return savedListing._id;
 }
 
-const getPropertyTypeQueryFilter = (queryParams)=>{
-    const propertyTypesSetBits = queryParams.propertyTypes;
+const getPropertyTypeQueryFilter = (propertyTypes)=>{
+    const propertyTypesSetBits = propertyTypes;
     const properyTypesIndecis = getSetBitIndices(propertyTypesSetBits);
     const propertyTypesValues = extractListValuesByIndecis(properyTypesIndecis, propertyTypes);
     const propertyTypesQueryFilter = { propertyType: { $in : propertyTypesValues} }
     return propertyTypesQueryFilter;
+}
+
+const getPriceQueryFilter = (price)=>{
+    const prices = price.split('-');
+    const minPrice = prices[0];
+    const maxPrice = prices[1];
+    const priceFilter = {
+        price: {
+          $gte: minPrice,
+          $lte: maxPrice
+        }
+    };
+    return priceFilter;
 }
 
 export const getSellListingsFromDB = async (queryParams)=>{
@@ -23,8 +36,12 @@ export const getSellListingsFromDB = async (queryParams)=>{
     // check all possible queries and convert to mongoose objects
     // 1. propertyTypes
     if(queryParams.propertyTypes != null){
-        const propertyTypesQueryFilter = getPropertyTypeQueryFilter(queryParams);
+        const propertyTypesQueryFilter = getPropertyTypeQueryFilter(queryParams.propertyTypes);
         queryFilters.push(propertyTypesQueryFilter);
+    }
+    if(queryParams.price != null){
+        const priceQueryFilter = getPriceQueryFilter(queryParams.price);
+        queryFilters.push(priceQueryFilter);
     }
 
     const listings = await SellListing.find({
