@@ -30,6 +30,19 @@ const getPriceQueryFilter = (price)=>{
     return priceFilter;
 }
 
+const getRoomsQueryFilter = (rooms)=>{
+    const roomsList = rooms.split('-');
+    const minRooms = roomsList[0];
+    const maxRooms = roomsList[1];
+    const roomsFilter = {
+        rooms: {
+            $gte: minRooms,
+            $lte: maxRooms
+        }
+    }
+    return roomsFilter;
+}
+
 export const getSellListingsFromDB = async (queryParams)=>{
 
     const queryFilters = [];
@@ -42,6 +55,10 @@ export const getSellListingsFromDB = async (queryParams)=>{
     if(queryParams.price != null){
         const priceQueryFilter = getPriceQueryFilter(queryParams.price);
         queryFilters.push(priceQueryFilter);
+    }
+    if(queryParams.rooms != null){
+        const roomsQueryFilter = getRoomsQueryFilter(queryParams.rooms);
+        queryFilters.push(roomsQueryFilter);
     }
 
     const listings = await SellListing.find({

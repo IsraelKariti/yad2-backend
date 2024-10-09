@@ -131,6 +131,10 @@ const sellListingSchema = mongoose.Schema({
     },
     availableOnSaturday: {
         type: Boolean,
+    },
+    mediaDirPath: {
+        type: String,
+        required: true,
     }
 });
 

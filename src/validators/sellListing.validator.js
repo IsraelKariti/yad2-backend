@@ -49,6 +49,7 @@ const sellListingSchema = Yup.object().shape({
         .required('Listing must includ the number of rooms')
         .oneOf(roomsCount),
 
+
     showers: Yup.number()
         .oneOf(showersCount),
 
@@ -93,7 +94,9 @@ const sellListingSchema = Yup.object().shape({
     
     virtualPhone: Yup.boolean(),
 
-    availableOnSaturday: Yup.boolean()
+    availableOnSaturday: Yup.boolean(),
+
+    mediaDirPath: Yup.string().required(),
 });
 
 export const validateSellListing = async (req, res, next)=>{
