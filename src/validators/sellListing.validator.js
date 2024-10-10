@@ -1,3 +1,4 @@
+import fs from 'fs';
 import * as Yup from 'yup';
 import { badRequest } from '../responses/responses.js';
 import { propertyTypes, propertyConditions, openViews, roomsCount, propertyCharacteristics, showersCount, parkingSpotsCount, balconiesCount } from "../constants/enums.js";
@@ -95,16 +96,17 @@ const sellListingSchema = Yup.object().shape({
     virtualPhone: Yup.boolean(),
 
     availableOnSaturday: Yup.boolean(),
-
-    mediaDirPath: Yup.string().required(),
 });
 
 export const validateSellListing = async (req, res, next)=>{
     try{
         const validtaion = await sellListingSchema.validate(req.body);
+
         next();
     }
     catch(e){
+        // remove the files (video and photos)
+        await fs.promises.rm('tempUploads', { recursive: true});
         badRequest(res, 'User data validation failed before controller'+e);
     }
 }

@@ -1,5 +1,6 @@
 import Papa from 'papaparse';
 import fs from 'fs';
+import path from 'path';
 import iconv from 'iconv-lite';
 import Axios from 'axios';
 
@@ -60,4 +61,14 @@ export const extractListValuesByIndecis = (indecis, list)=>{
     values.push(value);
   }
   return values;
+}
+
+export const copyFilesBetweenDirectories = async (srcPath, dstPath)=>{
+  const files = await fs.promises.readdir(srcPath);
+  await fs.promises.mkdir(dstPath);
+  await Promise.all(files.map(async (file)=>{
+    const srcFile = path.join(srcPath, file);
+    const dstFile = path.join(dstPath, file);
+    await fs.promises.rename(srcFile, dstFile);
+  }));
 }
