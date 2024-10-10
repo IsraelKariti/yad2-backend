@@ -2,7 +2,6 @@ import { propertyConditions, propertyTypes } from "../../constants/enums.js";
 import { SellListing } from "../../models/sellListing.model.js";
 import { getSetBitIndices, extractListValuesByIndecis } from "../../utils/utils.js";
 
-
 export const createSellListingInDB = async (listingInfo)=>{
     const newListing = new SellListing(listingInfo);
     const savedListing = await newListing.save();
@@ -87,7 +86,7 @@ export const getSellListingsFromDB = async (queryParams)=>{
         queryFilters.push(hasMediaQueryFilter);
     }
     if(queryParams.hasPrice != null){
-        const hasPriceQueryFilter = { hasPrice: true}
+        const hasPriceQueryFilter = { price: { $gt: 0 }}
         queryFilters.push(hasPriceQueryFilter);
     }
     if(queryParams.isVillage != null){

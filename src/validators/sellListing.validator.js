@@ -21,7 +21,7 @@ const sellListingSchema = Yup.object().shape({
 
     elevated: Yup.boolean(),
 
-    elevator: Yup.boolean(),
+    hasElevator: Yup.boolean(),
 
     neighbourhood: Yup.string()
         .required('Listing must include neighbourhood'),
@@ -97,8 +97,7 @@ const sellListingSchema = Yup.object().shape({
 
     availableOnSaturday: Yup.boolean(),
 
-    isVillage: Yup.boolean()
-        .required('listing must contain if it is a village'),
+    isVillage: Yup.boolean(),
 
     hasSafeRoom: Yup.boolean(),
 

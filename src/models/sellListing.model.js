@@ -28,7 +28,7 @@ const sellListingSchema = mongoose.Schema({
     elevated: {
         type: Boolean,
     },
-    elevator: {
+    hasElevator: {
         type: Boolean,
         default: false,
     },
@@ -145,6 +145,10 @@ const sellListingSchema = mongoose.Schema({
     hasPrice:{
         type: Boolean,
         required: true,
+    },
+    isVillage:{
+        type: Boolean,
+        default: false,
     },
     hasSafeRoom: {
         type: Boolean,
