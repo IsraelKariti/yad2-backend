@@ -4,6 +4,11 @@ import { createSellListingInDB, getSellListingsFromDB } from "../services/sellLi
 import { addSellListingToUserInDB } from "../services/users/users.service.js";
 import { copyFilesBetweenDirectories } from '../utils/utils.js';
 
+const doesMediaExist = async ()=>{
+    const files = await fs.promises.readdir('tempUploads');
+    return files.length > 0;
+}
+
 export const createSellListing = async (req, res)=>{
     const userEmail = req.email;
     const mediaDir = 'uploads';
@@ -18,6 +23,8 @@ export const createSellListing = async (req, res)=>{
     // STEP 1: create the listing in the collection
     const listingInfo = req.body;
     listingInfo.mediaDirPath = listingDirPath;
+    listingInfo.hasMedia = await doesMediaExist();
+    listingInfo.hasPrice = listingInfo.price != 0;
     const listingId = await createSellListingInDB(listingInfo);
 
     // STEP 2: add the listing id in the user 

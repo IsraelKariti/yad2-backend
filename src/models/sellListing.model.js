@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { propertyTypes, propertyConditions, openViews, roomsCount, propertyCharacteristics, showersCount, parkingSpotsCount, balconiesCount } from "../constants/enums.js";
+import { propertyTypes, propertyConditions, openViews, roomsCount, showersCount, parkingSpotsCount, balconiesCount } from "../constants/enums.js";
 
 const sellListingSchema = mongoose.Schema({
     city: {
@@ -27,6 +27,10 @@ const sellListingSchema = mongoose.Schema({
     },
     elevated: {
         type: Boolean,
+    },
+    elevator: {
+        type: Boolean,
+        default: false,
     },
     neighbourhood: {
         type: String,
@@ -75,15 +79,13 @@ const sellListingSchema = mongoose.Schema({
     },
     parkingSpots: {
         type: Number, 
-        enum: parkingSpotsCount
+        required: true,
+        enum: parkingSpotsCount,
+        default: 0,
     }, 
     balconies: {
         type: Number,
         enum: balconiesCount
-    },
-    propertyCharacteristics: {
-        type: [String],
-        enum: propertyCharacteristics,
     },
     propertyDescription: {
         type: String
@@ -135,6 +137,42 @@ const sellListingSchema = mongoose.Schema({
     mediaDirPath: {
         type: String,
         required: true,
+    },
+    hasMedia: {
+        type: Boolean,
+        required: true,
+    },
+    hasPrice:{
+        type: Boolean,
+        required: true,
+    },
+    hasSafeRoom: {
+        type: Boolean,
+        default: false,
+    },
+    hasAirCondition: {
+        type: Boolean,
+        default: false
+    },
+    hasStorage: {
+        type: Boolean,
+        default: false,
+    },
+    refurbished: {
+        type: Boolean,
+        default: false,
+    },
+    isAccessible: {
+        type: Boolean,
+        default: false,
+    },
+    barsOnWindows: {
+        type: Boolean,
+        default: false,
+    },
+    furnished: {
+        type: Boolean,
+        default: false,
     }
 });
 

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import * as Yup from 'yup';
 import { badRequest } from '../responses/responses.js';
-import { propertyTypes, propertyConditions, openViews, roomsCount, propertyCharacteristics, showersCount, parkingSpotsCount, balconiesCount } from "../constants/enums.js";
+import { propertyTypes, propertyConditions, openViews, roomsCount, showersCount, parkingSpotsCount, balconiesCount } from "../constants/enums.js";
 
 const sellListingSchema = Yup.object().shape({
   city: Yup.string()
@@ -20,6 +20,8 @@ const sellListingSchema = Yup.object().shape({
         .required('Total floors is required'),
 
     elevated: Yup.boolean(),
+
+    elevator: Yup.boolean(),
 
     neighbourhood: Yup.string()
         .required('Listing must include neighbourhood'),
@@ -59,9 +61,6 @@ const sellListingSchema = Yup.object().shape({
     
     balconies: Yup.number()
         .oneOf(balconiesCount),
-    
-    propertyCharacteristics: Yup.array()
-        .of(Yup.string().oneOf(propertyCharacteristics)),
 
     propertyDescription: Yup.string(),
 
@@ -72,6 +71,7 @@ const sellListingSchema = Yup.object().shape({
     .min(1),
 
     sqaureMetersTotal: Yup.number()
+        .required('Listing must contain the total of square meters of the property')
         .min(1),
     
     price: Yup.number()
@@ -96,6 +96,24 @@ const sellListingSchema = Yup.object().shape({
     virtualPhone: Yup.boolean(),
 
     availableOnSaturday: Yup.boolean(),
+
+    isVillage: Yup.boolean()
+        .required('listing must contain if it is a village'),
+
+    hasSafeRoom: Yup.boolean(),
+
+    hasAirCondition: Yup.boolean(),
+
+    hasStorage: Yup.boolean(),
+
+    refurbished: Yup.boolean(),
+
+    isAccessible: Yup.boolean(),
+
+    barsOnWindows: Yup.boolean(),
+
+    furnished: Yup.boolean(),
+
 });
 
 export const validateSellListing = async (req, res, next)=>{

@@ -8,7 +8,6 @@ import { createSellListing, getSellListings } from "../controllers/sellListings.
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const email = req.email;
-
         fs.mkdirSync('tempUploads', {recursive: true});
         cb(null, 'tempUploads');
     },
