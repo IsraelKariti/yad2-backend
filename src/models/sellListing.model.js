@@ -88,7 +88,8 @@ const sellListingSchema = mongoose.Schema({
         enum: balconiesCount
     },
     propertyDescription: {
-        type: String
+        type: String,
+        default: '',
     },
     sqaureMetersBuilt: {
         type: Number
@@ -107,9 +108,11 @@ const sellListingSchema = mongoose.Schema({
     },
     entranceDate: {
         type: Date, 
+        required: true,
     },
     immediateEntrance: {
         type: Boolean,
+        default: false
     },
     flexibleEntrance: {
         type: Boolean,

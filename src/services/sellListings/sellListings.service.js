@@ -54,10 +54,10 @@ const getFloorQueryFilter = (floor)=>{
     return filter;
 }
 const getSqaureMetersQueryFilter = (sqaureMeters)=>{
-    const parts = floor.split('-');
+    const parts = sqaureMeters.split('-');
     const minSqr = parts[0];
     const maxSqr = parts[1];
-    const filter = {sqaureMeters: {$gte: minSqr, $lte: maxSqr}}
+    const filter = {sqaureMetersTotal: {$gte: minSqr, $lte: maxSqr}}
     return filter;
 }
 const getEntranceDateFilter = (dediredEntranceDate)=>{
@@ -122,7 +122,7 @@ export const getSellListingsFromDB = async (queryParams)=>{
     if(queryParams.barsOnWindows!=null)
         queryFilters.push({barsOnWindows: true});
     if(queryParams.furnished != null)
-        queryParams.push({furnished: true});
+        queryFilters.push({furnished: true});
     if(queryParams.propertyCondition != null){
         const propertyConditionQueryFilter = getPropertyConditionQueryFilter(queryParams.propertyCondition);
         queryFilters.push(propertyConditionQueryFilter);
@@ -132,7 +132,7 @@ export const getSellListingsFromDB = async (queryParams)=>{
         queryFilters.push(floorQueryFilter);
     }
     if(queryParams.sqaureMetersTotal!=null){
-        const sqaureMetersQueryFilter = getSqaureMetersQueryFilter(queryParams.floor);
+        const sqaureMetersQueryFilter = getSqaureMetersQueryFilter(queryParams.sqaureMetersTotal);
         queryFilters.push(sqaureMetersQueryFilter);
     }
     if(queryParams.immediateEntrance != null){
@@ -143,7 +143,8 @@ export const getSellListingsFromDB = async (queryParams)=>{
         queryFilters.push(entranceDateFilter);
     }
     if(queryParams.propertyDescription != null){
-        const propertyDescriptionFilter = {propertyDescription : {$regex: propertyDescription, $options: 'i'}};
+        const textualPropertyDescription = queryParams.propertyDescription;
+        const propertyDescriptionFilter = {propertyDescription : {$regex: textualPropertyDescription, $options: 'i'}};
         queryFilters.push(propertyDescriptionFilter);
     }
 

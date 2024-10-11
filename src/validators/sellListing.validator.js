@@ -77,7 +77,8 @@ const sellListingSchema = Yup.object().shape({
     price: Yup.number()
         .min(10000),
     
-    entranceDate: Yup.date(),
+    entranceDate: Yup.date()
+        .required('Listing must include an entrance date'),
 
     immediateEntrance: Yup.boolean(),
 
@@ -124,6 +125,6 @@ export const validateSellListing = async (req, res, next)=>{
     catch(e){
         // remove the files (video and photos)
         await fs.promises.rm('tempUploads', { recursive: true});
-        badRequest(res, 'User data validation failed before controller'+e);
+        badRequest(res, 'User data validation failed before controller:\n'+e);
     }
 }
