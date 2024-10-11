@@ -32,3 +32,10 @@ export const addSellListingToUserInDB = async (email, sellListingId)=>{
         {$push: {SellListings: sellListingId}}
     )
 }
+
+export const deleteListingFromUserInDB = async (email, listingId)=>{
+    await User.findOneAndUpdate(
+        {email},
+        {$pull: {SellListings: listingId}}
+    )
+}

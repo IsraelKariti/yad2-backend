@@ -7,6 +7,8 @@ const jwt_secret = process.env.JWT_SECRET;
 
 export const authorizeToken = (req, res, next)=>{
     const auth = req.headers['auth'];
+    if(auth == null)
+        badRequest(res, 'Request headers should contain an auth key, and a token beared as value')
     const token = auth.split(' ')[1];
     try{
         const decoded = jwt.verify(token, jwt_secret);

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { ok, created, serverError } from "../responses/responses.js";
-import { createSellListingInDB, getSellListingsFromDB } from "../services/sellListings/sellListings.service.js";
-import { addSellListingToUserInDB } from "../services/users/users.service.js";
+import { createSellListingInDB, getSellListingsFromDB, deleteListingInDB } from "../services/sellListings/sellListings.service.js";
+import { addSellListingToUserInDB, deleteListingFromUserInDB } from "../services/users/users.service.js";
 import { copyFilesBetweenDirectories } from '../utils/utils.js';
 
 const doesMediaExist = async ()=>{
@@ -43,5 +43,18 @@ export const getSellListings = async (req, res)=>{
         ok(res, listings);
     }catch(e){
         serverError(res, 'Cant get listings: '+e);
+    }
+}
+
+export const deleteListing = async (req, res)=>{
+    const listingId = req.params.listingId;
+    const userEmail = req.email;
+    try{
+        await deleteListingInDB(listingId);
+        await deleteListingFromUserInDB(userEmail, listingId);
+        ok(res, 'Listing was deleted successfully');
+    }
+    catch(e){
+        serverError(res, 'Cant delte listing in DB')
     }
 }

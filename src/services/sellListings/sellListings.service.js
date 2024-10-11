@@ -154,3 +154,7 @@ export const getSellListingsFromDB = async (queryParams)=>{
     })
     return listings;
 }
+
+export const deleteListingInDB = async (listingId)=>{
+    await SellListing.findByIdAndDelete(listingId)
+}

@@ -3,7 +3,7 @@ import fs from 'fs';
 import { Router } from "express";
 import { authorizeToken } from "../auth/auth.js";
 import { validateSellListing } from "../validators/sellListing.validator.js";
-import { createSellListing, getSellListings } from "../controllers/sellListings.controller.js";
+import { createSellListing, getSellListings, deleteListing } from "../controllers/sellListings.controller.js";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -26,3 +26,4 @@ const cpUpload = upload.fields([{ name: 'video', maxCount: 1 }, { name: 'photos'
 export const sellListingsRouter = Router(); 
 sellListingsRouter.post('/create', authorizeToken, cpUpload, validateSellListing, createSellListing);
 sellListingsRouter.get('/', getSellListings);
+sellListingsRouter.delete('/:listingId', authorizeToken, deleteListing);
