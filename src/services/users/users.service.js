@@ -34,8 +34,9 @@ export const addSellListingToUserInDB = async (email, sellListingId)=>{
 }
 
 export const deleteListingFromUserInDB = async (email, listingId)=>{
-    await User.findOneAndUpdate(
+    const updated = await User.findOneAndUpdate(
         {email},
         {$pull: {SellListings: listingId}}
     )
+    return updated;
 }

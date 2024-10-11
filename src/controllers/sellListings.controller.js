@@ -49,6 +49,7 @@ export const getSellListings = async (req, res)=>{
 export const deleteListing = async (req, res)=>{
     const listingId = req.params.listingId;
     const userEmail = req.email;
+
     try{
         await deleteListingInDB(listingId);
         await deleteListingFromUserInDB(userEmail, listingId);
