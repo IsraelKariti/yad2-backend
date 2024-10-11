@@ -158,3 +158,10 @@ export const getSellListingsFromDB = async (queryParams)=>{
 export const deleteListingInDB = async (listingId)=>{
     await SellListing.findByIdAndDelete(listingId)
 }
+
+export const updateListingInDB = async (listingId, updatedInfo)=>{
+    await SellListing.findByIdAndUpdate(
+        listingId, 
+        {...updatedInfo}
+    );
+}

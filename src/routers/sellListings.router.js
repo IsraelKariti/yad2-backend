@@ -3,7 +3,7 @@ import fs from 'fs';
 import { Router } from "express";
 import { authorizeToken } from "../auth/auth.js";
 import { validateSellListing } from "../validators/sellListing.validator.js";
-import { createSellListing, getSellListings, deleteListing } from "../controllers/sellListings.controller.js";
+import { createSellListing, getSellListings, deleteListing, updateListing } from "../controllers/sellListings.controller.js";
 import { checkIfListingBelongToUser } from '../middlewares/middlewares.js';
 
 const storage = multer.diskStorage({
@@ -28,4 +28,4 @@ export const sellListingsRouter = Router();
 sellListingsRouter.post('/create', authorizeToken, cpUpload, validateSellListing, createSellListing);
 sellListingsRouter.get('/', getSellListings);
 sellListingsRouter.delete('/:listingId', authorizeToken, checkIfListingBelongToUser, deleteListing);
-// sellListingsRouter.update('/:listingId', authorizeToken, )
+sellListingsRouter.patch('/:listingId', authorizeToken, checkIfListingBelongToUser, updateListing);

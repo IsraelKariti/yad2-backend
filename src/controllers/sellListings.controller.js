@@ -1,8 +1,9 @@
 import fs from 'fs';
 import { ok, created, serverError } from "../responses/responses.js";
-import { createSellListingInDB, getSellListingsFromDB, deleteListingInDB } from "../services/sellListings/sellListings.service.js";
+import { createSellListingInDB, getSellListingsFromDB, deleteListingInDB, updateListingInDB } from "../services/sellListings/sellListings.service.js";
 import { addSellListingToUserInDB, deleteListingFromUserInDB } from "../services/users/users.service.js";
 import { copyFilesBetweenDirectories } from '../utils/utils.js';
+import { SellListing } from '../models/sellListing.model.js';
 
 const doesMediaExist = async ()=>{
     const files = await fs.promises.readdir('tempUploads');
@@ -58,4 +59,18 @@ export const deleteListing = async (req, res)=>{
     catch(e){
         serverError(res, 'Cant delte listing in DB')
     }
+}
+
+export const updateListing = async (req, res)=>{
+    const listingId = req.params.listingId;
+    const updatedInfo = req.body;
+
+    try{
+        await updateListingInDB(listingId, updatedInfo);
+        ok(res, 'Successfully updated listing in database');
+    }
+    catch(e){
+        serverError(res, 'Could not update the listing in the database')
+    }
+
 }
